@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Buzzfeed-Style Quiz</title>
+  <style>
+  body {
+    background-color: lightgreen;
+    font-family: Helvetica;
+  }
+  #main {
+    width: 80%;
+    border: 1px gray solid;
+    margin: auto;
+    padding: 10px;
+    background-color: white;
+    border-radius: 10px;
+  }
+  #header {
+    background-image:url("Friends.jpg");
+    background-size:contain;
+    margin-top: 0;
+    border: 2px solid black;
+    padding: 5px;
+    height: 150px;
+    text-align: center;
+    font-size: 150%;
+  }
+  #header h1 {
+    font-weight: 800;
+    color: white;
+  }
+  #form1 {
+    width: auto;
+  }
+  label {
+    width: 150px;
+    display: inline-block;
+    padding: 10px;
+  }
+  button {
+    display: block;
+    margin-top: 20px;
+  }
+  #answer4 {
+    font-size: 75px;
+    text-align: center;
+  }
+</style>
+</head>
+<body>
+  <div id="main">
+    <div id="header">
+      <h1>Which friend from <em> Friends </em> are you?</h1>
+    </div>
+
+    <form  id="form1">
+      <p><b>How old are you?</b></p>
+      <label><input type="radio" name="age" value="Phoebe" />I still sing in the shower (and wherever tbh)</label>
+      <label><input type="radio" name="age" value="Monica" />Old enough to vibe with Richard</label>
+      <label><input type="radio" name="age" value="Joey" />Did someone say pizza?</label>
+      <label><input type="radio" name="age" value="Chandler" />Too old to keep dancing when I win, but whatever right</label>
+      <label><input type="radio" name="age" value="Rachel" />I prefer to not say my age</label>
+      <label><input type="radio" name="age" value="Ross" />Young enough to pivot sofas EZ</label>
+
+      <p><b>While in a relationship, have you ever been on a break?</b></p>
+      <label><input type="radio" name="relationship" value="Ross" />YEAH I HAVE WHAT ABOUT IT </label>
+      <label><input type="radio" name="relationship" value="Monica" />Nah I prefer to just end it when its time</label>
+      <label><input type="radio" name="relationship" value="Joey" />I like taking breaks all the time</label>
+      <label><input type="radio" name="relationship" value="Phoebe" />Nah I like to just go with the flow, no breaks</label>
+      <label><input type="radio" name="relationship" value="Rachel" />Um no? There is no such thing</label>
+      <label><input type="radio" name="relationship" value="Chandler" />I'm not great at commitment, can I interest you in sarcastic comment?</label>
+
+      <p><b>Favorite pasttime?</b></p>
+      <label><input type="radio" name="pasttime" value="Ross" />Getting married</label>
+      <label><input type="radio" name="pasttime" value="Joey" />How you doin?</label>
+      <label><input type="radio" name="pasttime" value="Monica" />Baking cookies for the entire world basically</label>
+      <label><input type="radio" name="pasttime" value="Chandler" />I like to make jokes </label>
+      <label><input type="radio" name="pasttime" value="Phoebe" />Singing! Singing! Singing!</label>
+      <label><input type="radio" name="pasttime" value="Rachel" />I like to mess around with fashion</label>
+
+      <button type="submit" value="Submit">Submit</button>
+    </form>
+    <p id="answer"></p>
+    <p id="answer2"></p>
+    <p id="answer3"></p>
+    <p id="answer4"></p>
+  </div>
+  <script>
+
+  document.getElementById("form1").onsubmit=function() {
+    age = document.querySelector('input[name = "age"]:checked').value;
+    relationship = document.querySelector('input[name = "relationship"]:checked').value;
+    pasttime = document.querySelector('input[name = "pasttime"]:checked').value;
+
+    // initialize the score variables
+    joey = 0;
+    ross = 0;
+    rachel = 0;
+    chandler = 0;
+    phoebe = 0;
+    monica = 0;
+
+    //function to calculate score for each question
+    function eachscore(x){
+      if(x == "Rachel") { rachel = rachel + 1}
+      if(x == "Monica") { monica = monica + 1}
+      if(x == "Ross") { ross = ross + 1}
+      if(x == "Joey") { joey = joey + 1}
+      if(x == "Phoebe") { phoebe = phoebe + 1}
+      if(x == "Chandler") { chandler = chandler + 1}
+    }
+
+    //call function for each question
+    eachscore(eval("age"));
+    eachscore(eval("relationship"));
+    eachscore(eval("pasttime"));
+
+    all = [rachel, monica, ross, joey, phoebe, chandler];
+
+    //get the max score  in the array
+    maxscore = Math.max.apply(Math,all);
+
+    //figure out which score is the max score by identifying its index number
+    for(i=0; i<all.length; i++) {
+      if(all[i]==maxscore) {
+        highest = i;
+      }
+    }
+
+    scores = [
+      {index:0, feedback: "You got Rachel!"},
+      {index:1, feedback: "You got Monica!"},
+      {index:2, feedback: "You got Ross!"},
+      {index:3, feedback: "You got Joey!"},
+      {index:4, feedback: "You got Phoebe!"},
+      {index:5, feedback: "You got Chandler!"}];
+
+      //loop to match index to score and reply with feedback
+      for(i=0;i<scores.length; i++) {
+        if(highest == scores[i].index) {
+          document.getElementById("answer4").innerHTML = scores[i].feedback;
+        }
+      }
+      return false;
+    }
+    </script>
+
+  </body>
+  </html>
